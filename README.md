@@ -15,19 +15,18 @@
     **1. Tạo file google sheet**
     
     **2. Chọn Extensions -> Chọn Apps Script -> Dán toàn bộ mã nguồn bên dưới vào**
-     function doPost(e) {
+
+    function doPost(e) {
           try {
             var data = JSON.parse(e.postData.contents);
             var ss = SpreadsheetApp.getActiveSpreadsheet();            
             // Nhận tên lớp từ Extension để làm tên Sheet (Tab)
             var sheetName = data.sheetName || "Sheet1";
-            var sheet = ss.getSheetByName(sheetName);
-            
+            var sheet = ss.getSheetByName(sheetName);            
             // Nếu tab mang tên lớp này chưa tồn tại -> Tự động tạo mới
             if (!sheet) {
               sheet = ss.insertSheet(sheetName);
             }
-            
             // TỐI ƯU HÓA: Thay vì sheet.clear(), ta dùng sheet.clearContents()
             // Lệnh này CHỈ XÓA DỮ LIỆU, giữ nguyên 100% định dạng (màu sắc, viền, font chữ...)
             sheet.clearContents();
