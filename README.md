@@ -1,0 +1,4 @@
+- Đây là Extension tích hợp trên trình duyệt chrome hỗ trợ việc kết nối load điểm từ các khóa học trên hệ thống Canvas LMS.
+- Hỗ trợ xuất điểm theo lớp (Section), theo khóa học và kết quả trả về dưới dạng file csv.
+- Rút trích điểm theo mã sinh viên và sử dụng kết quả này để import lên hệ thống nhập điểm của giảng viên.
+- Tool này cho phép chuyển điểm lên google sheet, update và chia sẻ cho sinh viên theo dõi.
