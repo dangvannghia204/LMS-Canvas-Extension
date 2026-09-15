@@ -8,10 +8,6 @@
   + **Token:**
   <img width="949" height="1019" alt="image" src="https://github.com/user-attachments/assets/2b6a2f7e-83fd-4b27-a73a-14511c340c00" />
 
-  <img width="250" height="300" alt="image" src="https://github.com/user-attachments/assets/74620251-afd9-4e41-b6e3-e34df179c99c" />
-  
-  <img width="450" height="350" alt="image" src="https://github.com/user-attachments/assets/4d57eec1-e6d7-426c-be77-9adf5a6a245b" />
-
   + **Course:** 373
   + **Web App URL:** link của web app
     
