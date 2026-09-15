@@ -7,7 +7,7 @@
   + **Canvas:** https://canvas.donga.edu.vn
   + **Token:**
   <img width="547" height="607" alt="image" src="https://github.com/user-attachments/assets/74620251-afd9-4e41-b6e3-e34df179c99c" />
-  <img width="547" height="607" alt="image" src="https://github.com/user-attachments/assets/4d57eec1-e6d7-426c-be77-9adf5a6a245b" />
+  <img width="800" height="607" alt="image" src="https://github.com/user-attachments/assets/4d57eec1-e6d7-426c-be77-9adf5a6a245b" />
 
   + **Course:** 373
   + **Web App URL:** link của web app
