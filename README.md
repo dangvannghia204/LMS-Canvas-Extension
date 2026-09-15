@@ -50,8 +50,12 @@
                   }
             }   
     **3. Deploy -> New deployment và thiết lập như hình**
+ <img width="547" height="607" alt="image" src="https://github.com/user-attachments/assets/d86486a9-12c6-4664-a2e8-8c92aa6fc2e6" />
+    **4. Copy link web app như hình**
+ <img width="913" height="723" alt="image" src="https://github.com/user-attachments/assets/c67a018c-069b-4157-b12a-28043b4d399a" />
 
-    <img width="547" height="607" alt="image" src="https://github.com/user-attachments/assets/d86486a9-12c6-4664-a2e8-8c92aa6fc2e6" />
+
+
 
 
 
