@@ -50,7 +50,8 @@
           }
         }
 
-      c. Deploy -> New deployment và thiết lập như hình
+        **c. Deploy -> New deployment và thiết lập như hình**
+    
      <img width="547" height="607" alt="image" src="https://github.com/user-attachments/assets/d86486a9-12c6-4664-a2e8-8c92aa6fc2e6" />
 
 
