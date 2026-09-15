@@ -55,7 +55,8 @@
  
    **4. Copy link web app như hình**
    
- <img width="450" height="400" alt="image" src="https://github.com/user-attachments/assets/c67a018c-069b-4157-b12a-28043b4d399a" />
+<img width="450" height="350" alt="image" src="https://github.com/user-attachments/assets/2cd4e32d-998c-4303-9918-4201db3710a5" />
+
 
 
 
