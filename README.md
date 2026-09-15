@@ -11,10 +11,9 @@
 
   + **Course:** 373
   + **Web App URL:** link của web app
-    1. Tạo file google sheet
-    2. Chọn Extensions -> Chọn Apps Script -> Dán toàn bộ mã nguồn bên dưới vào
-    
-    function doPost(e) {
+    **1. Tạo file google sheet**
+    **2. Chọn Extensions -> Chọn Apps Script -> Dán toàn bộ mã nguồn bên dưới vào**
+     function doPost(e) {
           try {
             var data = JSON.parse(e.postData.contents);
             var ss = SpreadsheetApp.getActiveSpreadsheet();            
@@ -48,11 +47,15 @@
             return ContentService.createTextOutput(JSON.stringify({status: "error", message: err.toString()}))
               .setMimeType(ContentService.MimeType.JSON);
           }
-        }
+        }   
+    **3. Deploy -> New deployment và thiết lập như hình**
+         <img width="547" height="607" alt="image" src="https://github.com/user-attachments/assets/d86486a9-12c6-4664-a2e8-8c92aa6fc2e6" />
 
-        **c. Deploy -> New deployment và thiết lập như hình**
+
+
+  
     
-     <img width="547" height="607" alt="image" src="https://github.com/user-attachments/assets/d86486a9-12c6-4664-a2e8-8c92aa6fc2e6" />
+
 
 
 
