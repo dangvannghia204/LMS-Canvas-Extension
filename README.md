@@ -16,39 +16,39 @@
     
     **2. Chọn Extensions -> Chọn Apps Script -> Dán toàn bộ mã nguồn bên dưới vào**
 
-    function doPost(e) {
-          try {
-            var data = JSON.parse(e.postData.contents);
-            var ss = SpreadsheetApp.getActiveSpreadsheet();            
-            // Nhận tên lớp từ Extension để làm tên Sheet (Tab)
-            var sheetName = data.sheetName || "Sheet1";
-            var sheet = ss.getSheetByName(sheetName);            
-            // Nếu tab mang tên lớp này chưa tồn tại -> Tự động tạo mới
-            if (!sheet) {
-              sheet = ss.insertSheet(sheetName);
-            }
-            // TỐI ƯU HÓA: Thay vì sheet.clear(), ta dùng sheet.clearContents()
-            // Lệnh này CHỈ XÓA DỮ LIỆU, giữ nguyên 100% định dạng (màu sắc, viền, font chữ...)
-            sheet.clearContents();
-        
-            // Ghi tiêu đề cột một cách chính xác vào Dòng 1
-            // (Dùng getRange thay vì appendRow để đảm bảo không bị lệch dòng nếu sheet có định dạng sẵn)
-            if (data.headers && data.headers.length > 0) {
-              sheet.getRange(1, 1, 1, data.headers.length).setValues([data.headers]);
-            }
-        
-            // Ghi mảng dữ liệu bắt đầu từ Dòng 2
-            if (data.rows && data.rows.length > 0) {
-              sheet.getRange(2, 1, data.rows.length, data.rows[0].length).setValues(data.rows);
-            }
-        
-            return ContentService.createTextOutput(JSON.stringify({status: "success"}))
-              .setMimeType(ContentService.MimeType.JSON);
-          } catch (err) {
-            return ContentService.createTextOutput(JSON.stringify({status: "error", message: err.toString()}))
-              .setMimeType(ContentService.MimeType.JSON);
-          }
-    }   
+            function doPost(e) {
+                  try {
+                    var data = JSON.parse(e.postData.contents);
+                    var ss = SpreadsheetApp.getActiveSpreadsheet();            
+                    // Nhận tên lớp từ Extension để làm tên Sheet (Tab)
+                    var sheetName = data.sheetName || "Sheet1";
+                    var sheet = ss.getSheetByName(sheetName);            
+                    // Nếu tab mang tên lớp này chưa tồn tại -> Tự động tạo mới
+                    if (!sheet) {
+                      sheet = ss.insertSheet(sheetName);
+                    }
+                    // TỐI ƯU HÓA: Thay vì sheet.clear(), ta dùng sheet.clearContents()
+                    // Lệnh này CHỈ XÓA DỮ LIỆU, giữ nguyên 100% định dạng (màu sắc, viền, font chữ...)
+                    sheet.clearContents();
+                
+                    // Ghi tiêu đề cột một cách chính xác vào Dòng 1
+                    // (Dùng getRange thay vì appendRow để đảm bảo không bị lệch dòng nếu sheet có định dạng sẵn)
+                    if (data.headers && data.headers.length > 0) {
+                      sheet.getRange(1, 1, 1, data.headers.length).setValues([data.headers]);
+                    }
+                
+                    // Ghi mảng dữ liệu bắt đầu từ Dòng 2
+                    if (data.rows && data.rows.length > 0) {
+                      sheet.getRange(2, 1, data.rows.length, data.rows[0].length).setValues(data.rows);
+                    }
+                
+                    return ContentService.createTextOutput(JSON.stringify({status: "success"}))
+                      .setMimeType(ContentService.MimeType.JSON);
+                  } catch (err) {
+                    return ContentService.createTextOutput(JSON.stringify({status: "error", message: err.toString()}))
+                      .setMimeType(ContentService.MimeType.JSON);
+                  }
+            }   
     **3. Deploy -> New deployment và thiết lập như hình**
          <img width="547" height="607" alt="image" src="https://github.com/user-attachments/assets/d86486a9-12c6-4664-a2e8-8c92aa6fc2e6" />
 
