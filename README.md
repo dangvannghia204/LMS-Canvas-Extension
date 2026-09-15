@@ -13,7 +13,7 @@
   + **Web App URL:** link của web app
     1. Tạo file google sheet
     2. Chọn Extensions -> Chọn Apps Script -> Dán toàn bộ mã nguồn bên dưới vào
-       function doPost(e) {
+     function doPost(e) {
           try {
             var data = JSON.parse(e.postData.contents);
             var ss = SpreadsheetApp.getActiveSpreadsheet();
