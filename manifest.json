@@ -1,0 +1,19 @@
+{
+    "manifest_version": 3,
+    "name": "Canvas LMS - Quản Lý Điểm",
+    "version": "1.1",
+    "description": "Truy xuất và xuất điểm Canvas LMS theo Section (Full Tab)",
+    "action": {
+      "default_title": "Mở ứng dụng Canvas Grader"
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "permissions": [
+      "storage"
+    ],
+    "host_permissions": [
+      "*://*.instructure.com/*",
+      "*://*/*"
+    ]
+  }

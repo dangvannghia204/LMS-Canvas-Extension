@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas Grader - Quản Lý Điểm</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 8px; margin: 0; background: #e9ecef; overflow: hidden;}
+        
+        /* TOOLBAR 2 DÒNG SIÊU GỌN */
+        .toolbar { background: white; border: 1px solid #ddd; border-radius: 6px; padding: 8px 12px; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 8px; }
+        .toolbar-row { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; }
+        .toolbar-group { display: flex; align-items: center; gap: 5px; }
+        .right-align { margin-left: auto; display: flex; gap: 8px; } /* Đẩy các nút xuất/đồng bộ sang phải */
+        
+        .step-label { font-weight: 800; color: #0056b3; font-size: 12px; min-width: 75px; text-transform: uppercase;}
+        label { font-size: 12px; color: #495057; font-weight: 600; white-space: nowrap; }
+        
+        /* Thu nhỏ kích thước ô nhập liệu, giảm padding */
+        input[type="text"], input[type="password"], select { padding: 4px 8px; border: 1px solid #ced4da; border-radius: 4px; font-size: 12px; height: 26px; box-sizing: border-box;}
+        input:focus, select:focus { outline: none; border-color: #80bdff; box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); }
+        
+        /* Cân đối lại chiều rộng để vừa vặn màn hình */
+        #url { width: 150px; }
+        #token { width: 110px; }
+        #course_id { width: 60px; }
+        #gsheet_url { width: 180px; }
+        
+        #section_select { width: 140px; }
+        #assign_filter { width: 100px; }
+        #filter_select { width: 150px; }
+
+        button { padding: 0 12px; height: 26px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; transition: 0.2s; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center;}
+        button:disabled { background: #6c757d; cursor: not-allowed; opacity: 0.6; }
+        button:hover:not(:disabled) { background: #0056b3; }
+        button.success { background: #28a745; }
+        button.success:hover:not(:disabled) { background: #218838; }
+        button.sync { background: #0f9d58; }
+        button.sync:hover:not(:disabled) { background: #0b8043; }
+
+        .divider { width: 1px; height: 20px; background: #dee2e6; margin: 0 2px; }
+
+        /* MỞ RỘNG BẢNG TỐI ĐA (Chỉ trừ đi đúng kích thước toolbar và padding) */
+        .table-container { height: calc(100vh - 92px); overflow: auto; border: 1px solid #dee2e6; border-radius: 6px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; white-space: nowrap; }
+        
+        th { background: #f8f9fa; position: sticky; top: 0; padding: 8px 12px; border-bottom: 2px solid #dee2e6; text-align: left; z-index: 1; color: #495057; font-weight: bold;}
+        th.sortable { cursor: pointer; user-select: none; transition: background 0.2s; }
+        th.sortable:hover { background-color: #e2e6ea; color: #007bff;}
+        .sort-icon { font-size: 11px; margin-left: 5px; color: #adb5bd; }
+        th.sortable:hover .sort-icon { color: #007bff; }
+        
+        td { padding: 8px 12px; border-bottom: 1px solid #e9ecef; }
+        tr:hover td { background-color: #f8f9fa; } 
+        
+        .row-missing { color: #dc3545; font-weight: bold; }
+        .row-low-score { color: #fd7e14; font-weight: bold; }
+        
+        #loading { display: none; color: #007bff; font-weight: bold; font-size: 12px; animation: blinker 1s linear infinite;}
+        @keyframes blinker { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <!-- DÒNG 1: Gom toàn bộ Cấu hình Kết nối & Cấu hình Đồng bộ -->
+        <div class="toolbar-row">
+            <span class="step-label">⚙️ Cấu hình:</span>
+            <div class="toolbar-group">
+                <label>Canvas:</label>
+                <input type="text" id="url" placeholder="https://canvas...">
+            </div>
+            <div class="toolbar-group">
+                <label>Token:</label>
+                <input type="password" id="token" placeholder="Token...">
+            </div>
+            <div class="toolbar-group">
+                <label>Course:</label>
+                <input type="text" id="course_id" placeholder="VD: 12345">
+            </div>
+            <button id="btn_connect">Kết nối</button>
+            
+            <div class="divider"></div>
+            
+            <div class="toolbar-group">
+                <label>Web App URL:</label>
+                <input type="text" id="gsheet_url" placeholder="https://script.google.com/macros/...">
+            </div>
+            
+            <span id="loading" class="right-align">Đang tải dữ liệu...</span>
+        </div>
+
+        <!-- DÒNG 2: Gom toàn bộ Lọc, Truy xuất và Nút Hành động -->
+        <div class="toolbar-row">
+            <span class="step-label">📊 Dữ liệu:</span>
+            <div class="toolbar-group">
+                <label>Lớp:</label>
+                <select id="section_select" disabled><option>Chưa kết nối...</option></select>
+            </div>
+            <button id="btn_fetch" disabled>Lấy Điểm</button>
+
+            <div class="divider"></div>
+
+            <div class="toolbar-group">
+                <label>Lọc bài:</label>
+                <input type="text" id="assign_filter" placeholder="VD: Quiz...">
+            </div>
+            <div class="toolbar-group">
+                <label>Lọc SV:</label>
+                <select id="filter_select">
+                    <option value="all">Tất cả sinh viên</option>
+                    <option value="missing">Chỉ SV có bài chưa làm</option>
+                    <option value="completed">Chỉ SV hoàn thành đủ</option>
+                </select>
+            </div>
+            
+            <!-- Nhóm nút hành động đẩy dạt sang phải màn hình -->
+            <div class="toolbar-group right-align">
+                <button id="btn_export" class="success" disabled>Xuất CSV</button>
+                <button id="btn_gsheet" class="sync" disabled>Đồng bộ Sheet</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- KHU VỰC BẢNG ĐIỂM -->
+    <div class="table-container">
+        <table id="result_table">
+            <thead>
+                <tr id="table_header">
+                    <th>TT</th><th>IDSV</th><th>Họ tên</th><th>Ghi chú</th>
+                </tr>
+            </thead>
+            <tbody id="table_body">
+            </tbody>
+        </table>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
